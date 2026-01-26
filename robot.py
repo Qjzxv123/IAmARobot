@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-
+import keyboard
 
 
 # Initialize the Chrome Driver
@@ -343,6 +343,58 @@ time.sleep(1)
 #Level 26
 
 #Level 27
+def square(i):
+    return f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]'
+#Red
+actions.click_and_hold(driver.find_element(By.XPATH, square(1))) \
+    .move_to_element(driver.find_element(By.XPATH, square(7))) \
+    .move_to_element(driver.find_element(By.XPATH, square(13))) \
+    .move_to_element(driver.find_element(By.XPATH, square(19))) \
+    .move_to_element(driver.find_element(By.XPATH, square(25))) \
+    .move_to_element(driver.find_element(By.XPATH, square(31))) \
+    .move_to_element(driver.find_element(By.XPATH, square(32))) \
+    .move_to_element(driver.find_element(By.XPATH, square(26))) \
+    .move_to_element(driver.find_element(By.XPATH, square(20))) \
+    .move_to_element(driver.find_element(By.XPATH, square(21))) \
+    .move_to_element(driver.find_element(By.XPATH, square(22))) \
+    .release(driver.find_element(By.XPATH, square(28))) \
+    .perform()
+#Yellow
+actions.click_and_hold(driver.find_element(By.XPATH, square(4))) \
+    .move_to_element(driver.find_element(By.XPATH, square(3))) \
+    .move_to_element(driver.find_element(By.XPATH, square(2))) \
+    .move_to_element(driver.find_element(By.XPATH, square(8))) \
+    .release(driver.find_element(By.XPATH, square(14))) \
+    .perform()
+#Pink
+actions.click_and_hold(driver.find_element(By.XPATH, square(9))) \
+    .release(driver.find_element(By.XPATH, square(15))) \
+    .perform()
+#orange
+actions.click_and_hold(driver.find_element(By.XPATH, square(27))) \
+    .move_to_element(driver.find_element(By.XPATH, square(33))) \
+    .move_to_element(driver.find_element(By.XPATH, square(34))) \
+    .move_to_element(driver.find_element(By.XPATH, square(35))) \
+    .release(driver.find_element(By.XPATH, square(29))) \
+    .perform()
+#Blue
+actions.click_and_hold(driver.find_element(By.XPATH, square(6))) \
+    .move_to_element(driver.find_element(By.XPATH, square(5))) \
+    .move_to_element(driver.find_element(By.XPATH, square(11))) \
+    .move_to_element(driver.find_element(By.XPATH, square(10))) \
+    .release(driver.find_element(By.XPATH, square(16))) \
+    .perform()
+#purple
+actions.click_and_hold(driver.find_element(By.XPATH, square(12))) \
+    .move_to_element(driver.find_element(By.XPATH, square(18))) \
+    .move_to_element(driver.find_element(By.XPATH, square(17))) \
+    .move_to_element(driver.find_element(By.XPATH, square(23))) \
+    .move_to_element(driver.find_element(By.XPATH, square(24))) \
+    .move_to_element(driver.find_element(By.XPATH, square(30))) \
+    .release(driver.find_element(By.XPATH, square(36))) \
+    .perform()
+driver.find_element(By.ID, 'captcha-verify-button').click()
+time.sleep(1)
 
 #Level 28
 
@@ -379,10 +431,22 @@ time.sleep(1)
 #Level 34
 
 #Level 35
+while driver.execute_script("return window.localStorage.getItem('not-a-robot-level');")=="34":
+    driver.find_element(By.CLASS_NAME, "ball").click()
+    driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 36
 
 #Level 37
+srcs=["https://neal.fun/not-a-robot/imposters/9.webp",
+"https://neal.fun/not-a-robot/imposters/6.webp",
+"https://neal.fun/not-a-robot/imposters/1.webp"]
+for i in range(1,10):
+    if driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]/img').get_attribute("src") in srcs:
+        driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click()
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 38
 
@@ -399,9 +463,25 @@ time.sleep(1)
 #Level 44
 
 #Level 45
+while driver.execute_script("return window.localStorage.getItem('not-a-robot-level');")=="44":
+    driver.find_element(By.CSS_SELECTOR, '[placeholder="Chat with Jessica..."]').send_keys("were done\n")
+    time.sleep(1)
+    driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 46
+for i in range(409,419):
+    driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click()
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 47
 
 #Level 48
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div/div[2]/div/img').click()
+driver.execute_script("document.querySelector('video').currentTime = 87;")
+time.sleep(2)
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
+keyboard.wait(' ')
+driver.quit()
