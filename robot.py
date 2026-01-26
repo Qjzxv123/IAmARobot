@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
+import math
 
 
 # Initialize the Chrome Driver
@@ -257,6 +258,34 @@ driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
 #Level 17
+svg_element = driver.find_element(By.CSS_SELECTOR, "svg")
+    
+    # 2. Get exact dimensions
+rect = driver.execute_script("""
+        let rect = document.querySelector('svg').getBoundingClientRect();
+        return {w: rect.width, h: rect.height, top: rect.top};
+    """)
+radius = rect['w'] * 0.2  # Increased radius; 0.1 is very tiny
+vertical_lift = rect['h'] * 0.05 # Lifts the center by 5% of the total height
+steps = 25 # Smooth high-definition circle
+actions.move_to_element_with_offset(svg_element, radius, -vertical_lift)
+actions.click_and_hold().perform()
+for i in range(1, steps + 1):
+    theta = (2 * math.pi * i) / steps
+    prev_theta = (2 * math.pi * (i - 1)) / steps
+            # Calculate the movement delta (change)
+    dx = radius * (math.cos(theta) - math.cos(prev_theta))
+    dy = radius * (math.sin(theta) - math.sin(prev_theta))
+        
+    actions.move_by_offset(dx, dy)
+    if i % 2 == 0:
+        actions.perform()
+        actions = ActionChains(driver)
+        time.sleep(0.001) 
+
+actions.release().perform()
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 18
 while True:

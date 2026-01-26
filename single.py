@@ -10,8 +10,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
+import math
 # Set the desired level here
-level=48
+level=17
 
 # Initialize the Chrome Driver
 driver = uc.Chrome()
@@ -29,10 +30,4 @@ driver.execute_script("location.reload()")
 time.sleep(1)  # Wait for the page to load
 
 #Level Code Here
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div/div[2]/div/img').click()
-driver.execute_script("document.querySelector('video').currentTime = 87;")
-time.sleep(2)
-driver.find_element(By.ID, "captcha-verify-button").click()
-time.sleep(1)
-keyboard.wait(' ')
-driver.quit()
+
