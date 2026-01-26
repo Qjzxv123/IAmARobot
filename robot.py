@@ -509,6 +509,26 @@ driver.find_element(By.CLASS_NAME, "captcha-button-valid").click()
 time.sleep(1)
 
 #Level 34
+parsed_data = []
+
+for item in driver.find_elements(By.CSS_SELECTOR, ".math-grid-item"):
+    value_text = item.find_element(By.CLASS_NAME, "math-grid-term-actual").get_attribute("textContent").strip()
+    if not value_text:
+        continue # Skip if truly empty         
+    if "Infinity" in value_text:
+            value = float('inf')
+    else:
+        cleaned_value = "".join(c for c in value_text if c.isdigit() or c == '.')
+        value = float(cleaned_value)
+    parsed_data.append({
+        'element': item,
+        'value': value
+    })
+parsed_data.sort(key=lambda x: x['value'])
+for entry in parsed_data:
+    entry['element'].click()
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 35
 while driver.execute_script("return window.localStorage.getItem('not-a-robot-level');")=="34":
