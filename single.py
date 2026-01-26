@@ -10,6 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
+# Set the desired level here
+level=32
 
 # Initialize the Chrome Driver
 driver = uc.Chrome()
@@ -23,7 +25,8 @@ time.sleep(1)  # Wait for the page to load
 driver.find_element(By.CLASS_NAME, "recaptcha-container").click()
 time.sleep(2)  
 # Set a single item
-driver.execute_script("window.localStorage.setItem('not-a-robot-level', '32');")
+driver.execute_script(f"window.localStorage.setItem('not-a-robot-level', {level-1});")
 driver.execute_script("location.reload()")
 time.sleep(1)  # Wait for the page to load
 
+#Level Code Here
