@@ -314,6 +314,8 @@ driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
 #Level 19
+driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys(driver.find_element(By.CLASS_NAME, "letters").text.strip().replace("\n","")+"\n")
+time.sleep(1)
 
 #Level 20
 driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys("Butterfly")

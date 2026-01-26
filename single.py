@@ -12,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
 import math
 # Set the desired level here
-level=17
+level=19
 
 # Initialize the Chrome Driver
 driver = uc.Chrome()
