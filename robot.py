@@ -447,6 +447,55 @@ driver.find_element(By.ID, 'captcha-verify-button').click()
 time.sleep(1)
 
 #Level 32
+def solve_memory_level(driver):
+    # 1. Identify all tiles
+    tiles = driver.find_elements(By.CSS_SELECTOR, ".launchpad-pad")
+    
+    # Store the 'idle' class string (e.g., "dance-square launchpad-pad")
+    default_class = "dance-square launchpad-pad"
+    
+    sequence = []
+    print("Watching for flashes... (Wait for the game to finish showing the pattern)")
+    
+    # 2. Observation Phase
+    # We loop until we see no changes for 2 seconds (indicating the pattern is over)
+    last_flash_time = time.time()
+    last_tile_index = -1
+    
+    while time.time() - last_flash_time < 2.0:
+        for i, tile in enumerate(tiles):
+            current_class = tile.get_attribute("class")
+            
+            # Check if the class is DIFFERENT from the idle state
+            if current_class != default_class:
+                # To prevent recording the same flash multiple times:
+                if i != last_tile_index:
+                    sequence.append(tiles[i])
+                    last_tile_index = i
+                    last_flash_time = time.time()
+                    print(f"Recorded flash at tile {i}")
+                    
+        # Small delay to prevent CPU maxing out
+        time.sleep(0.05)
+        
+        # Timeout if we've been watching for 20 seconds with no flashes at all
+        if len(sequence) == 0 and time.time() - last_flash_time > 10:
+            print("No flashes detected. Check if the class names are correct.")
+            return
+
+    # 3. Playback Phase
+    print(f"Pattern ended. Clicking {len(sequence)} tiles...")
+    time.sleep(0.5) # Short pause before responding
+    
+    for tile in sequence:
+        try:
+            tile.click()
+        except Exception as e:
+            print(f"Click failed: {e}")
+for _ in range(3):
+    solve_memory_level(driver)
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 33
 results = []

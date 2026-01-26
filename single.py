@@ -12,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
 import math
 # Set the desired level here
-level=19
+level=32
 
 # Initialize the Chrome Driver
 driver = uc.Chrome()
@@ -30,4 +30,3 @@ driver.execute_script("location.reload()")
 time.sleep(1)  # Wait for the page to load
 
 #Level Code Here
-
