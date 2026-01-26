@@ -257,3 +257,151 @@ driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
 #Level 17
+
+#Level 18
+while True:
+        try:
+            # Wait for at least one element to be present
+            # We use a partial selector for the 'src' attribute
+            wait = WebDriverWait(driver, 5)
+            hydrants = wait.until(EC.presence_of_all_elements_located(
+                (By.XPATH, "//img[contains(@src, 'hydrants')]")
+            ))
+
+            if not hydrants:
+                break
+
+            # Click the first available hydrant
+            hydrants[0].click()
+            
+            # Brief pause to allow the DOM to update
+            time.sleep(0.5)
+
+        except:
+            # If no more elements are found or the page changes, we exit
+            print("No more hydrants found or page updated.")
+            break
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
+
+#Level 19
+
+#Level 20
+driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys("Butterfly")
+driver.find_element(By.CLASS_NAME, "captcha-button-valid").click()
+time.sleep(1)
+
+#Level 21
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div/div[2]/div[1]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[5]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[3]/div').click()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[4]')).perform()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[7]')).perform()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div/div[2]/div[1]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[3]/div').click()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[5]')).perform()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[8]')).perform()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div/div[2]/div[3]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div/div[2]/div[2]').click()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[1]')).perform()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[2]')).perform()
+actions.context_click(driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[3]')).perform()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[3]/div').click()
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(3)
+
+#Level 22
+for i in range(9):
+    driver.find_element(By.CSS_SELECTOR, ".duck.roaming").click()
+driver.find_element(By.ID, "captcha-verify-button").click()
+
+#Level 23
+
+#Level 24
+text=""
+for i in range(1,7):
+    text+=driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div[5]/span[{i}]').get_attribute("innerHTML").strip()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/input').send_keys(text)
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/input').send_keys("8")
+driver.find_element(By.ID, "captcha-verify-button").click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/input').send_keys("34")
+driver.find_element(By.ID, "captcha-verify-button").click()
+
+squares = driver.find_elements(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[2]/div/div/div')
+colors = [s.value_of_css_property("background-color") for s in squares]
+for i, color in enumerate(colors):
+    if colors.count(color) == 1:
+        print(f"Clicking square {i+1} with unique color: {color}")
+        squares[i].click()
+        break
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
+#Level 25
+
+#Level 26
+
+#Level 27
+
+#Level 28
+
+#Level 29
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[1]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[3]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[6]').click()
+driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[8]').click()
+driver.find_element(By.ID, 'captcha-verify-button').click()
+time.sleep(1)
+
+#Level 30
+
+#Level 31
+for i in range(2,17):
+    if i!=4:
+        driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click()
+driver.find_element(By.ID, 'captcha-verify-button').click()
+time.sleep(1)
+
+#Level 32
+
+#Level 33
+results = []
+for i in range(1, 6):
+            filename =  driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div[2]/img[{i}]').get_attribute("src").split("/not-a-robot/brands/")[1]
+            first_letter = filename[0]
+            results.append(first_letter)
+final_word = "".join(results)
+driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys(final_word)
+driver.find_element(By.CLASS_NAME, "captcha-button-valid").click()
+time.sleep(1)
+
+#Level 34
+
+#Level 35
+
+#Level 36
+
+#Level 37
+
+#Level 38
+
+#Level 39
+
+#Level 40
+
+#Level 41
+
+#Level 42
+
+#Level 43
+
+#Level 44
+
+#Level 45
+
+#Level 46
+
+#Level 47
+
+#Level 48
