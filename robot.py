@@ -51,7 +51,7 @@ driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
 #Level 5
-for i in range(1, 9):
+for i in range(1, 10):
     #click each item until its style attribute contains "rotate(360deg)"
     while "rotate(360deg)" not in driver.find_element(By.XPATH, f"//*[@id=\"__layout\"]/div/div/div[1]/div[3]/div/div[2]/div/div[{i}]").get_attribute("style"):
         driver.find_element(By.XPATH, f"//*[@id=\"__layout\"]/div/div/div[1]/div[3]/div/div[2]/div/div[{i}]").click()
@@ -219,7 +219,7 @@ srcs = [
 "https://neal.fun/not-a-robot/muffins/chihuahuas/6.webp",
 "https://neal.fun/not-a-robot/muffins/chihuahuas/3.webp"
 ]
-for i in range(1, 16):
+for i in range(1, 17):
     if driver.find_element(By.XPATH,f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]/img').get_attribute("src") in srcs:
         driver.find_element(By.XPATH,f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click() 
 driver.find_element(By.ID, "captcha-verify-button").click()
