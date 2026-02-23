@@ -12,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
 import math
 # Set the desired level here
-level=13
+level=15
 
 # Initialize the Chrome Driver
 driver = uc.Chrome()
@@ -30,16 +30,16 @@ driver.execute_script("location.reload()")
 time.sleep(1)  # Wait for the page to load
 
 #Level Code Here
-srcs = [
-"https://neal.fun/not-a-robot/muffins/chihuahuas/1.webp",
-"https://neal.fun/not-a-robot/muffins/chihuahuas/4.webp",
-"https://neal.fun/not-a-robot/muffins/chihuahuas/2.webp",
-"https://neal.fun/not-a-robot/muffins/chihuahuas/5.webp",
-"https://neal.fun/not-a-robot/muffins/chihuahuas/6.webp",
-"https://neal.fun/not-a-robot/muffins/chihuahuas/3.webp"
-]
-for i in range(1, 17):
-    if driver.find_element(By.XPATH,f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]/img').get_attribute("src") in srcs:
-        driver.find_element(By.XPATH,f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click() 
+
+ActionChains(driver).click(driver.find_element(By.XPATH, '//*[@id="park-canvas"]')).perform()
+actions = ActionChains(driver)
+actions.key_down(Keys.ARROW_UP).perform()
+time.sleep(1.65)
+actions.key_down(Keys.ARROW_RIGHT).perform()
+time.sleep(.5)
+actions.key_up(Keys.ARROW_RIGHT).perform()
+time.sleep(.7)
+actions.key_up(Keys.ARROW_UP).perform()
+time.sleep(.5)
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)

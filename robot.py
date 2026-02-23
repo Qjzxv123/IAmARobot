@@ -11,10 +11,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
 import math
-
+import undetected_chromedriver as uc
 
 # Initialize the Chrome Driver
-driver = webdriver.Chrome()
+driver = uc.Chrome()
 
 
     # Open the website
@@ -37,7 +37,7 @@ time.sleep(1)
 #Level 3
 while driver.execute_script("return window.localStorage.getItem('not-a-robot-level');")=="2":
     driver.find_element(By.XPATH, "//*[@id=\"__layout\"]/div/div/div[1]/div[3]/div/div[2]/div").click()
-    driver.find_element(By.XPATH, "//*[@id=\"__layout\"]/div/div/div[1]/div[3]/div/div[3]/div/input").send_keys("FNZZSD")
+    driver.find_element(By.XPATH, "//*[@id=\"__layout\"]/div/div/div[1]/div[3]/div/div[3]/div/input").send_keys("YHRPCD")
     driver.find_element(By.XPATH,"//*[@id=\"__layout\"]/div/div/div[1]/div[3]/div/div[3]/button").click()
 time.sleep(1)  
 
@@ -201,16 +201,6 @@ driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
 #Level 12
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[6]/img').click()
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[7]/img').click()
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[8]/img').click()
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[9]/img').click()
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[11]/img').click()
-driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[15]/img').click()
-driver.find_element(By.ID, "captcha-verify-button").click()
-time.sleep(1)
-
-#Level 13
 srcs = [
 "https://neal.fun/not-a-robot/muffins/chihuahuas/1.webp",
 "https://neal.fun/not-a-robot/muffins/chihuahuas/4.webp",
@@ -225,7 +215,7 @@ for i in range(1, 17):
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 14
+#Level 13
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[1]').click()
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[4]').click()
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[5]').click()
@@ -239,11 +229,11 @@ driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 15
+#Level 14
 driver.find_element(By.XPATH,'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[34]/div').click()
-time.sleep(1)
+time.sleep(2)
 
-#Level 16
+#Level 15
 ActionChains(driver).click(driver.find_element(By.XPATH, '//*[@id="park-canvas"]')).perform()
 actions = ActionChains(driver)
 actions.key_down(Keys.ARROW_UP).perform()
@@ -257,7 +247,8 @@ time.sleep(.5)
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 17
+
+#Level 16
 svg_element = driver.find_element(By.CSS_SELECTOR, "svg")
     
     # 2. Get exact dimensions
@@ -287,7 +278,7 @@ actions.release().perform()
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 18
+#Level 17
 while True:
         try:
             # Wait for at least one element to be present
@@ -313,16 +304,16 @@ while True:
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 19
+#Level 18
 driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys(driver.find_element(By.CLASS_NAME, "letters").text.strip().replace("\n","")+"\n")
 time.sleep(1)
 
-#Level 20
+#Level 19
 driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys("Butterfly")
 driver.find_element(By.CLASS_NAME, "captcha-button-valid").click()
 time.sleep(1)
 
-#Level 21
+#Level 20
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div/div[2]/div[1]').click()
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div[5]').click()
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[3]/div').click()
@@ -341,14 +332,14 @@ driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(3)
 
-#Level 22
+#Level 21
 for i in range(9):
     driver.find_element(By.CSS_SELECTOR, ".duck.roaming").click()
 driver.find_element(By.ID, "captcha-verify-button").click()
 
-#Level 23
+#Level 22
 
-#Level 24
+#Level 23
 text=""
 for i in range(1,7):
     text+=driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[1]/div[5]/span[{i}]').get_attribute("innerHTML").strip()
@@ -369,11 +360,11 @@ for i, color in enumerate(colors):
         break
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
+#Level 24
+
 #Level 25
 
 #Level 26
-
-#Level 27
 def square(i):
     return f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]'
 #Red
@@ -427,9 +418,9 @@ actions.click_and_hold(driver.find_element(By.XPATH, square(12))) \
 driver.find_element(By.ID, 'captcha-verify-button').click()
 time.sleep(1)
 
-#Level 28
+#Level 27
 
-#Level 29
+#Level 28
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[1]').click()
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[3]').click()
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[6]').click()
@@ -437,16 +428,16 @@ driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div
 driver.find_element(By.ID, 'captcha-verify-button').click()
 time.sleep(1)
 
-#Level 30
+#Level 29
 
-#Level 31
+#Level 30
 for i in range(2,17):
     if i!=4:
         driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click()
 driver.find_element(By.ID, 'captcha-verify-button').click()
 time.sleep(1)
 
-#Level 32
+#Level 31
 def solve_memory_level(driver):
     # 1. Identify all tiles
     tiles = driver.find_elements(By.CSS_SELECTOR, ".launchpad-pad")
@@ -497,7 +488,7 @@ for _ in range(3):
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 33
+#Level 32
 results = []
 for i in range(1, 6):
             filename =  driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div[2]/img[{i}]').get_attribute("src").split("/not-a-robot/brands/")[1]
@@ -508,7 +499,7 @@ driver.find_element(By.CLASS_NAME, "captcha-input-text").send_keys(final_word)
 driver.find_element(By.CLASS_NAME, "captcha-button-valid").click()
 time.sleep(1)
 
-#Level 34
+#Level 33
 parsed_data = []
 
 for item in driver.find_elements(By.CSS_SELECTOR, ".math-grid-item"):
@@ -530,15 +521,15 @@ for entry in parsed_data:
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 35
+#Level 34
 while driver.execute_script("return window.localStorage.getItem('not-a-robot-level');")=="34":
     driver.find_element(By.CLASS_NAME, "ball").click()
     driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 36
+#Level 35
 
-#Level 37
+#Level 36
 srcs=["https://neal.fun/not-a-robot/imposters/9.webp",
 "https://neal.fun/not-a-robot/imposters/6.webp",
 "https://neal.fun/not-a-robot/imposters/1.webp"]
@@ -547,6 +538,8 @@ for i in range(1,10):
         driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click()
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
+
+#Level 37
 
 #Level 38
 
@@ -561,23 +554,21 @@ time.sleep(1)
 #Level 43
 
 #Level 44
-
-#Level 45
 while driver.execute_script("return window.localStorage.getItem('not-a-robot-level');")=="44":
     driver.find_element(By.CSS_SELECTOR, '[placeholder="Chat with Jessica..."]').send_keys("were done\n")
     time.sleep(1)
     driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 46
+#Level 45
 for i in range(409,419):
     driver.find_element(By.XPATH, f'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div/div[{i}]').click()
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 47
+#Level 46
 
-#Level 48
+#Level 47
 driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div/div[1]/div[3]/div/div/div[2]/div/img').click()
 driver.execute_script("document.querySelector('video').currentTime = 87;")
 time.sleep(2)
