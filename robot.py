@@ -11,11 +11,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
 import math
-import undetected_chromedriver as uc
 
 # Initialize the Chrome Driver
-driver = uc.Chrome()
-
+driver = webdriver.Chrome()
+actions = ActionChains(driver)
 
     # Open the website
 driver.get("https://neal.fun/not-a-robot/")
@@ -234,18 +233,6 @@ driver.find_element(By.XPATH,'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[
 time.sleep(2)
 
 #Level 15
-ActionChains(driver).click(driver.find_element(By.XPATH, '//*[@id="park-canvas"]')).perform()
-actions = ActionChains(driver)
-actions.key_down(Keys.ARROW_UP).perform()
-time.sleep(1.65)
-actions.key_down(Keys.ARROW_RIGHT).perform()
-time.sleep(.5)
-actions.key_up(Keys.ARROW_RIGHT).perform()
-time.sleep(.7)
-actions.key_up(Keys.ARROW_UP).perform()
-time.sleep(.5)
-driver.find_element(By.ID, "captcha-verify-button").click()
-time.sleep(1)
 
 
 #Level 16
