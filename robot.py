@@ -1,16 +1,18 @@
-from asyncio import wait
+import math
+import time
+import keyboard
+from collections import deque
+# Selenium Core
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-import time
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.webdriver.common.action_chains import ActionChains
+# Selenium Wait & Exceptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-import keyboard
-import math
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+
+from asyncio import wait
 
 # Initialize the Chrome Driver
 driver = webdriver.Chrome()
@@ -377,7 +379,17 @@ for i, color in enumerate(colors):
 driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 #Level 25
-
+driver.find_element(By.XPATH,'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div[1]').click()
+driver.find_element(By.ID, "express-canvas").click()
+driver.find_element(By.XPATH,'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div[2]').click()
+driver.find_element(By.ID, "express-canvas").click()
+driver.find_element(By.XPATH,'//*[@id="__layout"]/div/div/div[1]/div[3]/div/div[2]/div/div[2]/div[3]').click()
+driver.find_element(By.ID, "express-canvas").click()
+driver.execute_script("document.querySelector('.color-picker-hidden').value ='#FF0000';document.querySelector('.color-picker-hidden').dispatchEvent(new Event('input', { bubbles: true }));")
+for i in range(8):
+    driver.find_element(By.ID, "express-canvas").click()
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 #Level 26
 
 #Level 27
@@ -445,6 +457,80 @@ driver.find_element(By.ID, 'captcha-verify-button').click()
 time.sleep(1)
 
 #Level 30
+
+TILE_MAP = {
+    "0% 0%": 0, "50% 0%": 1, "100% 0%": 2,
+    "0% 50%": 3, "50% 50%": 4, "100% 50%": 5,
+    "0% 100%": 6, "50% 100%": 7, "None": 8  # 8 is the empty slot
+}
+
+def solve_puzzle_bfs(start_state):
+    goal = tuple(range(9))
+    # Queue stores (current_state, path_of_tile_values_moved)
+    queue = deque([(start_state, [])])
+    visited = {start_state}
+
+    while queue:
+        current, path = queue.popleft()
+        
+        if current == goal:
+            return path
+
+        empty_idx = current.index(8)
+        r, c = divmod(empty_idx, 3)
+
+        # Potential moves: Right, Left, Down, Up
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            nr, nc = r + dr, c + dc
+            
+            if 0 <= nr < 3 and 0 <= nc < 3:
+                neighbor_idx = nr * 3 + nc
+                new_state = list(current)
+                # Swap empty spot with the neighbor tile
+                new_state[empty_idx], new_state[neighbor_idx] = new_state[neighbor_idx], new_state[empty_idx]
+                new_state = tuple(new_state)
+
+                if new_state not in visited:
+                    visited.add(new_state)
+                    # We record the value of the tile we just moved into the empty space
+                    queue.append((new_state, path + [current[neighbor_idx]]))
+
+def scrape_board(driver):
+    tiles = driver.find_elements(By.CSS_SELECTOR, ".puzzle-tile")
+    board = [None] * 9
+    
+    for tile in tiles:
+        # Calculate grid position based on style="top: X%; left: Y%;"
+        left_str = tile.get_attribute("style").split("left: ")[1].split("%")[0]
+        top_str = tile.get_attribute("style").split("top: ")[1].split("%")[0]
+        
+        col = int(float(left_str) // 33)
+        row = int(float(top_str) // 33)
+        grid_pos = row * 3 + col
+        
+        if "empty-tile" in tile.get_attribute("class"):
+            board[grid_pos] = 8
+        else:
+            img = tile.find_element(By.CLASS_NAME, "tile-image")
+            bg_pos = img.value_of_css_property('background-position')
+            board[grid_pos] = TILE_MAP.get(bg_pos)
+            
+    return tuple(board)
+
+initial_state = scrape_board(driver)
+moves = solve_puzzle_bfs(initial_state)
+
+# 3. Execute clicks
+for tile_value in moves:
+    all_tiles = driver.find_elements(By.CSS_SELECTOR, ".puzzle-tile:not(.empty-tile)")
+    for t in all_tiles:
+        img = t.find_element(By.CLASS_NAME, "tile-image")
+        if TILE_MAP.get(img.value_of_css_property('background-position')) == tile_value:
+            t.click()
+            time.sleep(0.4) # Brief pause for the slide animation to finish
+            break
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 
 #Level 31
 for i in range(2,17):
@@ -543,8 +629,91 @@ while driver.execute_script("return window.localStorage.getItem('not-a-robot-lev
     driver.find_element(By.ID, "captcha-verify-button").click()
 time.sleep(1)
 
-#Level 36 candy crush
+#Level 36
+def get_score():
+    try:
+        score_element = driver.find_element(By.CSS_SELECTOR, ".stat-value")
+        return int(score_element.text.replace(',', ''))
+    except:
+        return 0
 
+def is_match(g, idx):
+    if not g[idx]: return False
+    r, c = divmod(idx, 8)
+    color = g[idx]
+    
+    # Horizontal Check
+    h_count = 1
+    for i in range(c - 1, -1, -1):
+        if g[r * 8 + i] == color: h_count += 1
+        else: break
+    for i in range(c + 1, 8):
+        if g[r * 8 + i] == color: h_count += 1
+        else: break
+    if h_count >= 3: return True
+
+    # Vertical Check
+    v_count = 1
+    for i in range(r - 1, -1, -1):
+        if g[i * 8 + c] == color: v_count += 1
+        else: break
+    for i in range(r + 1, 8):
+        if g[i * 8 + c] == color: v_count += 1
+        else: break
+    return v_count >= 3
+
+def find_any_match():
+    """Scans for the first available move in either direction."""
+    cells = driver.find_elements(By.CLASS_NAME, "candy-cell")
+    grid = []
+    for cell in cells:
+        try:
+            grid.append(cell.find_element(By.TAG_NAME, "svg").get_attribute("class"))
+        except:
+            grid.append(None)
+
+    for i in range(len(grid)):
+        r, c = divmod(i, 8)
+        
+        # 1. Try Horizontal (Right)
+        if c < 7:
+            temp = list(grid)
+            temp[i], temp[i+1] = temp[i+1], temp[i]
+            if is_match(temp, i) or is_match(temp, i+1):
+                return cells[i], Keys.ARROW_RIGHT
+
+        # 2. Try Vertical (Down)
+        if r < 7:
+            temp = list(grid)
+            temp[i], temp[i+8] = temp[i+8], temp[i]
+            if is_match(temp, i) or is_match(temp, i+8):
+                return cells[i], Keys.ARROW_DOWN
+                
+    return None, None
+
+# --- Main Loop ---
+while True:
+    if get_score() >= 1000:
+        print("Success! 1000 points reached.")
+        break
+
+    element, key_to_press = find_any_match()
+
+    if element:
+        try:
+            element.click()
+            time.sleep(0.05)
+            element.send_keys(key_to_press)
+            time.sleep(1.4) # Wait for drop animation
+        except:
+            continue
+    else:
+        # No matches found, force a board shuffle
+        print("No matches. Shuffling...")
+        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ARROW_DOWN)
+        time.sleep(1.0)
+driver.find_element(By.ID, "captcha-verify-button").click()
+time.sleep(1)
 #Level 37
 srcs=["https://neal.fun/not-a-robot/imposters/9.webp",
 "https://neal.fun/not-a-robot/imposters/6.webp",
@@ -560,6 +729,62 @@ time.sleep(1)
 #Level 39
 
 #Level 40
+def get_live_y(reel_id):
+    return driver.execute_script("""
+        var el = document.getElementById(arguments[0]);
+        var style = window.getComputedStyle(el);
+        var trans = style.translate || style.transform;
+        if (!trans || trans === 'none') return 0;
+        var y = trans.split(' ').pop();
+        return Math.abs(parseFloat(y));
+    """, reel_id)
+
+def solve_with_timing():
+    wait = WebDriverWait(driver, 10)
+    input_field = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "captcha-input-text")))
+    
+    # 1. PRE-SCAN: Get all target characters first
+    targets = []
+    for i in range(5):
+        reel_id = f"slot-reel-{i}"
+        reel_element = driver.find_element(By.ID, reel_id)
+        
+        # Wait until the span inside the reel actually has text
+        char = ""
+        while not char:
+            slots = reel_element.find_elements(By.CLASS_NAME, "slot-letter")[:5]
+            for idx, slot in enumerate(slots):
+                spans = slot.find_elements(By.TAG_NAME, "span")
+                if spans and spans[0].text.strip():
+                    char = spans[0].text.strip()
+                    targets.append({"char": char, "idx": idx, "id": reel_id})
+                    break
+            if not char: time.sleep(0.1) # Brief wait if DOM isn't ready
+
+    # 2. SNIPE: Execute the rhythm-based typing
+    for target in targets:
+        target_y = target["idx"] * 10
+        char = target["char"]
+        reel_id = target["id"]
+        
+        print(f"Targeting Reel {reel_id[-1]}: Sniping '{char}' at {target_y}%")
+
+        while True:
+            current_y = get_live_y(reel_id)
+            
+            # Adjust the 1.5 margin if the script skips the target or fires late
+            if abs(current_y - target_y) < 1.5:
+                input_field.send_keys(char)
+                print(f"SUCCESS: Fired {char}")
+                time.sleep(0.5) # Wait for the reel-stop animation to trigger
+                break
+
+    # 3. SUBMIT
+    time.sleep(0.5)
+    driver.find_element(By.CLASS_NAME, "captcha-button").click()
+
+solve_with_timing()
+time.sleep(1)
 
 #Level 41
 
